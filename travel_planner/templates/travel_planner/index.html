@@ -1,0 +1,69 @@
+{% extends "travel_planner/base.html" %}
+
+{{% block content %}
+
+    <div class="alert alert-dark" role="alert">
+        Travisy Welcomes you!
+    </div>
+
+    <!-- INPUT ORIGIN AND DESTINATION -->
+    <form action="/" method="POST"> {% csrf_token %}
+        <div class="row container">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Starting" aria-label="origin" name = "origin">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Destination" aria-label="destination" name="destination">
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Go</button>
+            </div>
+        </div>
+    </form> 
+    <br>
+
+    <!-- Destination Map -->
+    {% if destination_map_url %}
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                Google Maps Support ||<strong>Preferred Mode of Travel -</strong>{{best_method}}</a>
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+            <div class="accordion-body">
+              <center>
+                  <iframe height=480 width=600 src="{{destination_map_url}}" frameborder="0" style="border:3px" allowfullscreen></iframe>
+                  <br>  
+                  {% if support_link and support_travel %}
+                    <a target="_blank" href="{{support_link}}">{{support_travel}}</a>
+                  {% endif %}
+                  {% if support_link_2 and support_travel_2 %}
+                    <a target="_blank" href="{{support_link_2}}">{{support_travel_2}}</a>
+                  {% endif %}
+                </center>
+            </div>
+          </div>
+        {% if dist_and_dur is not None %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                Drive Details
+            </button>
+            </h2>
+        </div>
+        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+            <div class="accordion-body">
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Distance - </strong>{{dist_and_dur.0}}</li>
+                <li class="list-group-item"><strong>Expected Duration - </strong>{{dist_and_dur.1}}</li>
+            </ul>
+            </div>
+          </div>
+        {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock content %}}
