@@ -3,7 +3,7 @@ from urllib.parse import urlencode, urlparse, parse_qsl
 
 # Complete FIND PLACE
 
-api_key = 'AIzaSyB3TnoWd3iIkTi4D2XILIgZ5NrHEicyPiA'
+api_key = API_KEY
 
 class GoogleAPI:
     def extract_lat_lng(location_name, datatype="json"): # Takes Location Name
